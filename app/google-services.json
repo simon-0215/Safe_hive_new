@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "162274404533",
+    "project_id": "safehive-8cd12",
+    "storage_bucket": "safehive-8cd12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162274404533:android:cea8a24171155d27cff6fc",
+        "android_client_info": {
+          "package_name": "com.example.louxiaotian"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtnuyJvGMz9Xiq9ESt-CSnmZ4n1SCbLHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
