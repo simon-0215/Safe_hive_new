@@ -50,7 +50,9 @@ public class LoginFragment extends Fragment {
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
+        final Button registerButton = binding.register;
         final ProgressBar loadingProgressBar = binding.loading;
+
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
@@ -122,10 +124,12 @@ public class LoginFragment extends Fragment {
 //                loginViewModel.login(usernameEditText.getText().toString(),
 //                        passwordEditText.getText().toString());
 
-                Button button = view.findViewById(R.id.login);
+                Button button_login = view.findViewById(R.id.login);
+                Button button_register = view.findViewById(R.id.register);
                 EditText password = view.findViewById(R.id.password);
                 EditText username = view.findViewById(R.id.username);
-                button.setOnClickListener(new View.OnClickListener() {
+
+                button_login.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
@@ -144,6 +148,39 @@ public class LoginFragment extends Fragment {
                             }
 
                         }
+                    }
+                });
+
+
+            }
+        });
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                loadingProgressBar.setVisibility(View.VISIBLE);
+//                loginViewModel.login(usernameEditText.getText().toString(),
+//                        passwordEditText.getText().toString());
+
+                Button button_login = view.findViewById(R.id.login);
+                Button button_register = view.findViewById(R.id.register);
+                EditText password = view.findViewById(R.id.password);
+                EditText username = view.findViewById(R.id.username);
+
+                button_register.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+
+                        String new_username = username.getText().toString();
+                        String new_password = password.getText().toString();
+                        //those are the username and password user enter and want to create a new account.
+
+                        //to go finish the logic
+
+
+
+
                     }
                 });
 
