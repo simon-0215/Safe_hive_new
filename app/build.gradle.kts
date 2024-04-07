@@ -13,7 +13,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,9 +42,16 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("androidx.navigation:navigation-ui:2.7.7")
     implementation("androidx.annotation:annotation:1.7.1")
+    implementation("com.google.firebase:firebase-messaging:23.4.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-firestore")
+
+    // Multidex
+    implementation("androidx.multidex:multidex:2.0.1")
+
 }

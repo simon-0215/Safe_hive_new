@@ -24,6 +24,10 @@ import androidx.navigation.Navigation;
 import com.example.louxiaotian.databinding.FragmentLoginBinding;
 
 import com.example.louxiaotian.R;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 public class LoginFragment extends Fragment {
 
@@ -99,6 +103,7 @@ public class LoginFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+
             }
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
@@ -125,27 +130,28 @@ public class LoginFragment extends Fragment {
                 Button button = view.findViewById(R.id.login);
                 EditText password = view.findViewById(R.id.password);
                 EditText username = view.findViewById(R.id.username);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        System.out.println(1);
-                        if(username.getText().toString().equals("123")||password.getText().toString().equals("123456")){
-                            System.out.println(2);
-                            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
-                        }
-                        // 使用NavController进行导航
-                        else{
-
-                            try {
-                                throw new Exception();
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-
-                        }
-                    }
-                });
+                button.setOnClickListener(vv -> registerUser());
+//                        new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        System.out.println(1);
+//                        if(username.getText().toString().equals("123")||password.getText().toString().equals("123456")){
+//                            System.out.println(2);
+//                            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
+//                        }
+//                        // 使用NavController进行导航
+//                        else{
+//
+//                            try {
+//                                throw new Exception();
+//                            } catch (Exception e) {
+//                                throw new RuntimeException(e);
+//                            }
+//
+//                        }
+//                    }
+//                });
 
 
             }
@@ -173,5 +179,40 @@ public class LoginFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+//    public void registerUser(String firstname, String lastname, String email, String password) {
+//        FirebaseFirestore database = FirebaseFirestore.getInstance();
+//        HashMap<String, Object> data = new HashMap<>();
+//        data.put("first_name", firstname);
+//        data.put("last_name", lastname);
+//        data.put("email", email);
+//        data.put("password", password);
+//
+//        database.collection("users")
+//                .add(data)
+//                .addOnSuccessListener(documentReference -> {
+//                    Toast.makeText(getActivity().getApplicationContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
+//                })
+//                .addOnFailureListener(exception -> {
+//                    Toast.makeText(getActivity().getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+//                });
+//    }
+    public void registerUser() {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("first_name", "Jane");
+        data.put("last_name", "Doe");
+        data.put("email", "jane_d@example.com");
+        data.put("password", "123");
+
+        database.collection("users")
+                .add(data)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(getActivity().getApplicationContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(exception -> {
+                    Toast.makeText(getActivity().getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }
