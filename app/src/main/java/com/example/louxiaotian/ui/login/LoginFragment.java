@@ -29,7 +29,6 @@ import com.example.louxiaotian.databinding.FragmentLoginBinding;
 import com.example.louxiaotian.R;
 
 
-import com.example.louxiaotian.util.Constants;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
