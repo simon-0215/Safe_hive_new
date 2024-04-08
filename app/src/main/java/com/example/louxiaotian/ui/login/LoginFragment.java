@@ -138,12 +138,23 @@ public class LoginFragment extends Fragment {
                 Button button_register = view.findViewById(R.id.register);
                 EditText password = view.findViewById(R.id.password);
                 EditText username = view.findViewById(R.id.username);
-                button_login.setOnClickListener(vv ->
-                        // authenticateUser returns true if user and pass are found in the database and false otherwise
-                        // TODO: if true, go to home page, else prompt user to check credentialsS
-                        authenticateUser(username.getText().toString(), password.getText().toString())
-                );
-                Message.KEY_SENDER = username.getText().toString();
+
+//                button_login.setOnClickListener(vv ->
+//                        // authenticateUser returns true if user and pass are found in the database and false otherwise
+//                        // TODO: if true, go to home page, else prompt user to check credentialsS
+//                        authenticateUser(username.getText().toString(), password.getText().toString())
+//                );
+//                Message.KEY_SENDER = username.getText().toString();
+                button_login.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        if(authenticateUser((username.getText().toString()),password.getText().toString())){
+                            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
+//                        }
+                        // 在这里实现点击事件的处理逻辑
+
+                    }
+                });
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
