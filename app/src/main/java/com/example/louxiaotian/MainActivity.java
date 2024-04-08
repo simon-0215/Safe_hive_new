@@ -9,8 +9,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.louxiaotian.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.Base64;
 
+public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     @Override

@@ -13,7 +13,6 @@ import javax.crypto.spec.IvParameterSpec
 
 @RequiresApi(Build.VERSION_CODES.M)
 class EncryptionManager {
-
     private val keyStore = KeyStore.getInstance("AndroidKeyStore").apply{
         load(null)
     }
@@ -77,4 +76,6 @@ class EncryptionManager {
         private const val PADDING = KeyProperties.ENCRYPTION_PADDING_PKCS7
         private const val TRANSFORMATION = "$ALGORITHM/$BLOCK_MODE/$PADDING"
     }
+
+
 }
