@@ -140,7 +140,7 @@ public class LoginFragment extends Fragment {
 //                        if(authenticateUser((username.getText().toString()),password.getText().toString())){
                             Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
 //                        }
-                        // 在这里实现点击事件的处理逻辑
+
 
                     }
                 });
