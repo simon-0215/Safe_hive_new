@@ -146,7 +146,7 @@ public class LoginFragment extends Fragment {
 //                        // TODO: if true, go to home page, else prompt user to check credentialsS
 //                        authenticateUser(username.getText().toString(), password.getText().toString())
 //                );
-//                Message.KEY_SENDER = username.getText().toString();
+
                 button_login.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -159,22 +159,19 @@ public class LoginFragment extends Fragment {
                         firebaseAuth.authenticateUser(username.getText().toString(), password.getText().toString(), new FirebaseAuth.AuthenticationListener() {
                             @Override
                             public void onAuthenticated(boolean isAuthenticated) {
-//                                if (isAuthenticated) {
+                                if (isAuthenticated) {
                                     // Authentication successful
                                     Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
-//                                } else {
+                                    Message.KEY_SENDER = username.getText().toString();
+                                } else {
                                     // Authentication failed
-//                                    Log.d("Authentication", "Authentication failed");
-//                                }
+                                    Log.d("Authentication", "Authentication failed");
+                                }
                             }
                         });
 
                     }
                 });
-
-
-
-
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {

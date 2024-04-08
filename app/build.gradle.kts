@@ -51,8 +51,9 @@ dependencies {
     // Firebase
 //    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
 //    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-firestore")
-    implementation("com.google.firebase:firebase-firestore:17.0.4")
+//    implementation("com.google.firebase:firebase-firestore")
+//    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-firestore:23.0.3")
     implementation ("com.google.firebase:firebase-core:16.0.1")
 
 

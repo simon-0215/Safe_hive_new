@@ -1,6 +1,7 @@
 package com.example.louxiaotian.ui.dashboard;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.louxiaotian.databinding.FragmentDashboardBinding;
+import com.example.louxiaotian.firebase.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
+import java.util.List;
 
 public class DashboardFragment extends Fragment {
 
@@ -37,9 +41,28 @@ public class DashboardFragment extends Fragment {
 
                 String date = dateInputEdittext.getText().toString();
                 String keyWord = keywordInputEdittext.getText().toString();
+                FirebaseAuth fba = new FirebaseAuth();
+                fba.getAllUsernames(new FirebaseAuth.GetAllUsernamesListener() {
+                    @Override
+                    public void onUsernamesRetrieved(List<String> usernames) {
+                        if (usernames != null) {
+                            // Usernames retrieved successfully
+                            for (String username : usernames) {
+                                Log.d("Usernames", "Username: " + username);
+                                real_message_display_bar.setText(username);
+                            }
+
+                        } else {
+                            // Failed to retrieve usernames
+                            Log.d("Usernames", "Failed to retrieve usernames");
+                        }
+                    }
+                });
 
                 String message_after_decryption = "message from "+date+" "+ keyWord;
                 real_message_display_bar.setText(message_after_decryption);
+//                real_message_display_bar.setText(message_after_decryption);
+
             }
         });
 
