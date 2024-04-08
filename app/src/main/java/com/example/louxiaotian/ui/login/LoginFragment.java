@@ -8,6 +8,7 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -24,10 +25,14 @@ import androidx.navigation.Navigation;
 import com.example.louxiaotian.databinding.FragmentLoginBinding;
 
 import com.example.louxiaotian.R;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Queue;
 
 public class LoginFragment extends Fragment {
 
@@ -125,12 +130,15 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Button button_login = view.findViewById(R.id.login);
                 Button button_register = view.findViewById(R.id.register);
                 EditText password = view.findViewById(R.id.password);
                 EditText username = view.findViewById(R.id.username);
-                button_login.setOnClickListener(vv -> registerUser());
+                button_login.setOnClickListener(vv ->
+                        // authenticateUser returns true if user and pass are found in the database and false otherwise
+                        // TODO: if true, go to home page, else prompt user to check credentialsS
+                        authenticateUser(username.getText().toString(), password.getText().toString())
+                );
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -183,6 +191,8 @@ public class LoginFragment extends Fragment {
     }
 
     public void registerUser(String username, String password) {
+
+        // TODO: implement checks for uniqueness of username, maybe ask for additional fields for employee database interfacing
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> data = new HashMap<>();
         data.put("username", username);
@@ -199,25 +209,24 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
-    public void registerUser() {
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("first_name", "Jane");
-        data.put("last_name", "Doe");
-        data.put("email", "jane_d@example.com");
-        data.put("password", "123");
 
-        database.collection("users")
-                .add(data)
-                .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(getActivity().getApplicationContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(exception -> {
-                    Toast.makeText(getActivity().getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+
+    public boolean authenticateUser(String username, String password){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userRef = db.collection("users");
+        final boolean[] foundUser = new boolean[1];
+        userRef.whereEqualTo("username", username)
+                .whereEqualTo("password", password)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null
+                        && task.getResult().getDocuments().size() >0){
+                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                        foundUser[0] = true;
+                    } else {
+                        foundUser[0] = false;
+                    }
                 });
-    }
-
-    public void authenticateUser(){
-
+        return foundUser[0];
     }
 }
