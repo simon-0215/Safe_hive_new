@@ -7,10 +7,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.louxiaotian.MessageManager.Message;
 import com.example.louxiaotian.databinding.FragmentHomeBinding;
+import com.example.louxiaotian.util.Constants;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Date;
+import java.util.HashMap;
 
 public class HomeFragment extends Fragment {
 
@@ -35,6 +44,7 @@ public class HomeFragment extends Fragment {
                 // 获取EditText输入的内容，并设置到TextView上显示
                 String inputText = editText.getText().toString();
                 displayText.setText(inputText);
+                addMessageToFirestore(inputText);
             }
         });
         return root;
@@ -45,4 +55,21 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+    public void addMessageToFirestore(String text){
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("Text", text);
+        data.put("Sender", Message.KEY_SENDER);
+        data.put("Timestamp", new Date());
+
+        database.collection("Message")
+                .add(data)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(getActivity().getApplicationContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(exception -> {
+                    Toast.makeText(getActivity().getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
 }

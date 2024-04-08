@@ -22,9 +22,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.navigation.Navigation;
+
+import com.example.louxiaotian.MessageManager.Message;
 import com.example.louxiaotian.databinding.FragmentLoginBinding;
 
 import com.example.louxiaotian.R;
+
+
+import com.example.louxiaotian.util.Constants;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -139,6 +144,7 @@ public class LoginFragment extends Fragment {
                         // TODO: if true, go to home page, else prompt user to check credentialsS
                         authenticateUser(username.getText().toString(), password.getText().toString())
                 );
+                Message.KEY_SENDER = username.getText().toString();
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
