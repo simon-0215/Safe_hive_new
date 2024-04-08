@@ -125,46 +125,17 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loadingProgressBar.setVisibility(View.VISIBLE);
-//                loginViewModel.login(usernameEditText.getText().toString(),
-//                        passwordEditText.getText().toString());
 
                 Button button_login = view.findViewById(R.id.login);
                 Button button_register = view.findViewById(R.id.register);
                 EditText password = view.findViewById(R.id.password);
                 EditText username = view.findViewById(R.id.username);
                 button_login.setOnClickListener(vv -> registerUser());
-//                        new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                        System.out.println(1);
-//                        if(username.getText().toString().equals("123")||password.getText().toString().equals("123456")){
-//                            System.out.println(2);
-//                            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
-//                        }
-//                        // 使用NavController进行导航
-//                        else{
-//
-//                            try {
-//                                throw new Exception();
-//                            } catch (Exception e) {
-//                                throw new RuntimeException(e);
-//                            }
-//
-//                        }
-//                    }
-//                });
-
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loadingProgressBar.setVisibility(View.VISIBLE);
-//                loginViewModel.login(usernameEditText.getText().toString(),
-//                        passwordEditText.getText().toString());
-
                 Button button_login = view.findViewById(R.id.login);
                 Button button_register = view.findViewById(R.id.register);
                 EditText password = view.findViewById(R.id.password);
@@ -174,16 +145,11 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-
-
                         String new_username = username.getText().toString();
                         String new_password = password.getText().toString();
                         //those are the username and password user enter and want to create a new account.
-
-                        //to go finish the logic
-
-
-
+                        //enter user into db
+                        registerUser(new_username, new_password);
 
                     }
                 });
@@ -216,23 +182,23 @@ public class LoginFragment extends Fragment {
         binding = null;
     }
 
-//    public void registerUser(String firstname, String lastname, String email, String password) {
-//        FirebaseFirestore database = FirebaseFirestore.getInstance();
-//        HashMap<String, Object> data = new HashMap<>();
-//        data.put("first_name", firstname);
+    public void registerUser(String username, String password) {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("username", username);
 //        data.put("last_name", lastname);
 //        data.put("email", email);
-//        data.put("password", password);
-//
-//        database.collection("users")
-//                .add(data)
-//                .addOnSuccessListener(documentReference -> {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
-//                })
-//                .addOnFailureListener(exception -> {
-//                    Toast.makeText(getActivity().getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-//                });
-//    }
+        data.put("password", password);
+
+        database.collection("users")
+                .add(data)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(getActivity().getApplicationContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(exception -> {
+                    Toast.makeText(getActivity().getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
     public void registerUser() {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> data = new HashMap<>();
@@ -249,5 +215,9 @@ public class LoginFragment extends Fragment {
                 .addOnFailureListener(exception -> {
                     Toast.makeText(getActivity().getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    public void authenticateUser(){
+
     }
 }
