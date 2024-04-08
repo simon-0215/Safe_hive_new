@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.louxiaotian.MessageManager.Message;
 import com.example.louxiaotian.databinding.FragmentHomeBinding;
-import com.example.louxiaotian.util.Constants;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.example.louxiaotian.databinding.FragmentLoginBinding;
 import com.example.louxiaotian.R;
 
 
+import com.example.louxiaotian.firebase.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -148,13 +150,31 @@ public class LoginFragment extends Fragment {
                 button_login.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        if(authenticateUser((username.getText().toString()),password.getText().toString())){
-                            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
-//                        }
-                        // 在这里实现点击事件的处理逻辑
+////                        if(authenticateUser((username.getText().toString()),password.getText().toString())){
+//                            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
+////                        }
+//                        // 在这里实现点击事件的处理逻辑
+
+                        FirebaseAuth firebaseAuth = new FirebaseAuth();
+                        firebaseAuth.authenticateUser(username.getText().toString(), password.getText().toString(), new FirebaseAuth.AuthenticationListener() {
+                            @Override
+                            public void onAuthenticated(boolean isAuthenticated) {
+//                                if (isAuthenticated) {
+                                    // Authentication successful
+                                    Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
+//                                } else {
+                                    // Authentication failed
+//                                    Log.d("Authentication", "Authentication failed");
+//                                }
+                            }
+                        });
 
                     }
                 });
+
+
+
+
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -236,7 +256,7 @@ public class LoginFragment extends Fragment {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null
-                        && task.getResult().getDocuments().size() >0){
+                        && !task.getResult().getDocuments().isEmpty()){
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         foundUser[0] = true;
                     } else {
