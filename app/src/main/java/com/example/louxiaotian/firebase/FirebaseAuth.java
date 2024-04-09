@@ -58,7 +58,7 @@ public class FirebaseAuth {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         ArrayList<String> usernames = new ArrayList<>();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            String username = document.getId();
+                            String username = document.getString("username");
                             usernames.add(username);
                         }
                         listener.onUsernamesRetrieved(usernames);
