@@ -3,18 +3,17 @@ package com.example.louxiaotian;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.navigation.Navigation;
 
-import com.example.louxiaotian.firebase.FirebaseAuth;
+import com.example.louxiaotian.database.DatabaseManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -69,7 +68,7 @@ public class BlankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Get Users
-        FirebaseAuth fba = new FirebaseAuth();
+        DatabaseManager fba = new DatabaseManager();
 
         // Inflate the layout for this fragment
 
@@ -80,17 +79,17 @@ public class BlankFragment extends Fragment {
         Button user4 = view.findViewById(R.id.button4);
         Button user5 = view.findViewById(R.id.button5);
         List<Button> buttons = new ArrayList<>(Arrays.asList(user1, user2, user3, user4, user5));
-        Iterator<Button> b_iter = buttons.iterator();
-        fba.getAllUsernames(new FirebaseAuth.GetAllUsernamesListener() {
+        fba.getAllUsernames(new DatabaseManager.GetAllUsernamesListener() {
             @Override
             public void onUsernamesRetrieved(List<String> usernames) {
                 if (usernames != null) {
                     for(int i=0; i<buttons.size(); i++ ){
-                        buttons.get(i).setText(usernames.get(i));
+                        final String username = usernames.get(i);
+                        buttons.get(i).setText(username);
                         buttons.get(i).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                chat_username = usernames.get(i);
+                                chat_username = username;
                                 Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
                             }
                         });
@@ -99,61 +98,6 @@ public class BlankFragment extends Fragment {
                     // Failed to retrieve usernames
                     Log.d("Usernames", "Failed to retrieve usernames");
                 }
-            }
-        });
-
-        for(int i=0; i<buttons.size(); i++ ){
-            buttons.get(i).setText(usernames.get(i));
-        }
-//        user1.setText(getString(R.string."Jane Doe"));
-        //user2.setText(getString(R.string.button_name));
-        //user3.setText(getString(R.string.button_name));
-        //user4.setText(getString(R.string.button_name));
-        //user5.setText(getString(R.string.button_name));
-
-        user1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //chat_username = ""it should be a username from databse;
-                //each onclick method will sign the chat_username with a new value
-
-                Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
-            }
-        });
-
-        user2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //chat_username = ""it should be a username from databse;
-
-                Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
-            }
-        });
-
-        user3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //chat_username = ""it should be a username from databse;
-
-                Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
-            }
-        });
-
-        user4.setOnClickListener(new View.OnClickListener() {
-            //chat_username = ""it should be a username from databse;
-            @Override
-            public void onClick(View v) {
-
-                Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
-            }
-        });
-
-        user5.setOnClickListener(new View.OnClickListener() {
-            //chat_username = ""it should be a username from databse;
-            @Override
-            public void onClick(View v) {
-
-                Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
             }
         });
 

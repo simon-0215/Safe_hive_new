@@ -8,10 +8,8 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,15 +28,9 @@ import com.example.louxiaotian.databinding.FragmentLoginBinding;
 import com.example.louxiaotian.R;
 
 
-import com.example.louxiaotian.firebase.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.Queue;
 
 public class LoginFragment extends Fragment {
 
@@ -141,23 +133,14 @@ public class LoginFragment extends Fragment {
                 EditText password = view.findViewById(R.id.password);
                 EditText username = view.findViewById(R.id.username);
 
-//                button_login.setOnClickListener(vv ->
-//                        // authenticateUser returns true if user and pass are found in the database and false otherwise
-//                        // TODO: if true, go to home page, else prompt user to check credentialsS
-//                        authenticateUser(username.getText().toString(), password.getText().toString())
-//                );
 
                 button_login.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-////                        if(authenticateUser((username.getText().toString()),password.getText().toString())){
-//                            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
-////                        }
-//                        // 在这里实现点击事件的处理逻辑
 
                         Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
                         Message.KEY_SENDER = username.getText().toString();
-//
+//                        // TODO: fix auth, right now all sign in attempts go through
 //                        FirebaseAuth firebaseAuth = new FirebaseAuth();
 //                        firebaseAuth.authenticateUser(username.getText().toString(), password.getText().toString(), new FirebaseAuth.AuthenticationListener() {
 //                            @Override
@@ -246,23 +229,23 @@ public class LoginFragment extends Fragment {
                 });
     }
 
-
-    public boolean authenticateUser(String username, String password){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference userRef = db.collection("users");
-        final boolean[] foundUser = new boolean[1];
-        userRef.whereEqualTo("username", username)
-                .whereEqualTo("password", password)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && task.getResult() != null
-                        && !task.getResult().getDocuments().isEmpty()){
-                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                        foundUser[0] = true;
-                    } else {
-                        foundUser[0] = false;
-                    }
-                });
-        return foundUser[0];
-    }
+//    old auth function
+//    public boolean authenticateUser(String username, String password){
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        CollectionReference userRef = db.collection("users");
+//        final boolean[] foundUser = new boolean[1];
+//        userRef.whereEqualTo("username", username)
+//                .whereEqualTo("password", password)
+//                .get()
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful() && task.getResult() != null
+//                        && !task.getResult().getDocuments().isEmpty()){
+//                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+//                        foundUser[0] = true;
+//                    } else {
+//                        foundUser[0] = false;
+//                    }
+//                });
+//        return foundUser[0];
+//    }
 }

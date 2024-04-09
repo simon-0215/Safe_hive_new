@@ -40,10 +40,11 @@ public class HomeFragment extends Fragment {
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         final EditText editText = binding.editTextInput; // Assuming you have an EditText with this ID in your FragmentHomeBinding
         final Button button = binding.buttonPrint; // Assuming you have a Button with this ID in your FragmentHomeBinding
+        chat_Username.setText(chat_username);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chat_Username.setText(chat_username);
 
 
                 String inputText = editText.getText().toString();

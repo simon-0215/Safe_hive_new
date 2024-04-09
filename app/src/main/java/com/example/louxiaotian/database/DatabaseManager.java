@@ -1,4 +1,4 @@
-package com.example.louxiaotian.firebase;
+package com.example.louxiaotian.database;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -11,11 +11,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirebaseAuth {
+public class DatabaseManager {
 
     private FirebaseFirestore db;
 
-    public FirebaseAuth(){
+    public DatabaseManager(){
         db = FirebaseFirestore.getInstance();
 
     }
