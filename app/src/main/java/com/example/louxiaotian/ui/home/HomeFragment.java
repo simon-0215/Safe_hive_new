@@ -53,13 +53,20 @@ public class HomeFragment extends Fragment {
         DatabaseManager dbm = new DatabaseManager();
         dbm.getAllMessages(Message.KEY_SENDER, chat_username, new DatabaseManager.GetAllMessagesListener() {
             @Override
-            public void onMessagesRetrieved(List<Message> messages) {
+            public void onMessagesRetrieved(List<String> messages) {
                 if (messages != null) {
                     // Messages retrieved successfully
-                    for (Message message : messages) {
-                        // Process each message
-                        displayText.setText(message.getText());
-//                        Log.d("Messages", "Message: " + );
+                    Log.d("Messages", "Num messages:"+messages.size());
+                    Log.d("Messages", "Messages"+messages);
+//                    for (Message message : messages) {
+//                        // Process each message
+////                        displayText.setText(message.getText());
+//                        Log.d("Messages", "Recipient: " + message.getReciever());
+//                        Log.d("Messages", "Message: " + message.getText());
+//                    }
+                    for (String message : messages) {
+                        displayText.setText(message);
+                        Log.d("Messages", "Message: " + message);
                     }
                 } else {
                     // Failed to retrieve messages

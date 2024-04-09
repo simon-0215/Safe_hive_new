@@ -83,11 +83,19 @@ public class DatabaseManager {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        List<Message> messages = new ArrayList<>();
+//                        List<Message> messages = new ArrayList<>();
+                        List<String> messages = new ArrayList<>();
+
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             // Assuming Message is a custom class representing your message data
-                            Message message = new Message(document.getString("receiver"), document.getString("text"), document.getString("time_date"));
-                            messages.add(message);
+                            Log.d("Messages_DB", "Message: "+ document.getString("text"));
+//                            Message message = new Message(document.getString("receiver"), document.getString("text"), document.getString("time_date"));
+                            messages.add(document.getString("text"));
+//                            Log.d("Messages_DB", "Message: "+ message.getText());
+
+                        }
+                        for (String message: messages){
+                            Log.d("Messages_DB", "Message: "+ message);
                         }
                         listener.onMessagesRetrieved(messages);
                     }
@@ -148,7 +156,7 @@ public class DatabaseManager {
     }
 
     public interface GetAllMessagesListener {
-        void onMessagesRetrieved(List<Message> messages);
+        void onMessagesRetrieved(List<String> messages);
     }
 
     public interface GetSingleMessageListener {
