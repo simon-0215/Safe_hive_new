@@ -23,7 +23,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class BlankFragment extends Fragment {
-    private static String username = "";
+    public static String chat_username = "";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -114,6 +114,8 @@ public class BlankFragment extends Fragment {
         user1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //chat_username = ""it should be a username from databse;
+                //each onclick method will sign the chat_username with a new value
 
                 Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
             }
@@ -122,7 +124,7 @@ public class BlankFragment extends Fragment {
         user2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //chat_username = ""it should be a username from databse;
 
                 Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
             }
@@ -131,12 +133,14 @@ public class BlankFragment extends Fragment {
         user3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //chat_username = ""it should be a username from databse;
 
                 Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
             }
         });
 
         user4.setOnClickListener(new View.OnClickListener() {
+            //chat_username = ""it should be a username from databse;
             @Override
             public void onClick(View v) {
 
@@ -145,6 +149,7 @@ public class BlankFragment extends Fragment {
         });
 
         user5.setOnClickListener(new View.OnClickListener() {
+            //chat_username = ""it should be a username from databse;
             @Override
             public void onClick(View v) {
 

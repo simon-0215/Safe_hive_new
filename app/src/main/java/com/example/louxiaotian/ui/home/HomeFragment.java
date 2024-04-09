@@ -20,6 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Date;
 import java.util.HashMap;
 
+import static com.example.louxiaotian.BlankFragment.chat_username;
+
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
@@ -34,13 +36,16 @@ public class HomeFragment extends Fragment {
 
         final TextView textView = binding.textHome;
         final TextView displayText = binding.displayText;
+        final TextView chat_Username = binding.textViewLeftTop;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         final EditText editText = binding.editTextInput; // Assuming you have an EditText with this ID in your FragmentHomeBinding
         final Button button = binding.buttonPrint; // Assuming you have a Button with this ID in your FragmentHomeBinding
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 获取EditText输入的内容，并设置到TextView上显示
+                chat_Username.setText(chat_username);
+
+
                 String inputText = editText.getText().toString();
                 displayText.setText(inputText);
                 addMessageToFirestore(inputText);
