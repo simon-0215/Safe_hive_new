@@ -1,6 +1,7 @@
 package com.example.louxiaotian;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.navigation.Navigation;
+
+import com.example.louxiaotian.firebase.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,8 +68,10 @@ public class BlankFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Get Users
+        FirebaseAuth fba = new FirebaseAuth();
 
+        // Inflate the layout for this fragment
 
         View view =  inflater.inflate(R.layout.fragment_blank, container, false);
         Button user1 = view.findViewById(R.id.button1);
@@ -69,7 +79,33 @@ public class BlankFragment extends Fragment {
         Button user3 = view.findViewById(R.id.button3);
         Button user4 = view.findViewById(R.id.button4);
         Button user5 = view.findViewById(R.id.button5);
-        //user1.setText(getString(R.string.button_name));
+        List<Button> buttons = new ArrayList<>(Arrays.asList(user1, user2, user3, user4, user5));
+        Iterator<Button> b_iter = buttons.iterator();
+        fba.getAllUsernames(new FirebaseAuth.GetAllUsernamesListener() {
+            @Override
+            public void onUsernamesRetrieved(List<String> usernames) {
+                if (usernames != null) {
+                    for(int i=0; i<buttons.size(); i++ ){
+                        buttons.get(i).setText(usernames.get(i));
+                        buttons.get(i).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                chat_username = usernames.get(i);
+                                Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
+                            }
+                        });
+                    }
+                } else {
+                    // Failed to retrieve usernames
+                    Log.d("Usernames", "Failed to retrieve usernames");
+                }
+            }
+        });
+
+        for(int i=0; i<buttons.size(); i++ ){
+            buttons.get(i).setText(usernames.get(i));
+        }
+//        user1.setText(getString(R.string."Jane Doe"));
         //user2.setText(getString(R.string.button_name));
         //user3.setText(getString(R.string.button_name));
         //user4.setText(getString(R.string.button_name));

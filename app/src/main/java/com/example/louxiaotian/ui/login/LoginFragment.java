@@ -155,20 +155,23 @@ public class LoginFragment extends Fragment {
 ////                        }
 //                        // 在这里实现点击事件的处理逻辑
 
-                        FirebaseAuth firebaseAuth = new FirebaseAuth();
-                        firebaseAuth.authenticateUser(username.getText().toString(), password.getText().toString(), new FirebaseAuth.AuthenticationListener() {
-                            @Override
-                            public void onAuthenticated(boolean isAuthenticated) {
-                                if (isAuthenticated) {
-                                    // Authentication successful
-                                    Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
-                                    Message.KEY_SENDER = username.getText().toString();
-                                } else {
-                                    // Authentication failed
-                                    Log.d("Authentication", "Authentication failed");
-                                }
-                            }
-                        });
+                        Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
+                        Message.KEY_SENDER = username.getText().toString();
+//
+//                        FirebaseAuth firebaseAuth = new FirebaseAuth();
+//                        firebaseAuth.authenticateUser(username.getText().toString(), password.getText().toString(), new FirebaseAuth.AuthenticationListener() {
+//                            @Override
+//                            public void onAuthenticated(boolean isAuthenticated) {
+//                                if (isAuthenticated) {
+//                                    // Authentication successful
+//                                    Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
+//                                    Message.KEY_SENDER = username.getText().toString();
+//                                } else {
+//                                    // Authentication failed
+//                                    Log.d("Authentication", "Authentication failed");
+//                                }
+//                            }
+//                        });
 
                     }
                 });
