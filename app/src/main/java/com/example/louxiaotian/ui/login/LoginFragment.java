@@ -139,27 +139,41 @@ public class LoginFragment extends Fragment {
                 button_login.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String user, pass;
+                        user = username.getText().toString();
+                        pass = password.getText().toString();
 
+                        // INITIALIZES KDC
                         KDCManagement kdcManagement = new KDCManagement();
                         kdcManagement.generateKey(1);
 
-                        Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
-                        Message.KEY_SENDER = username.getText().toString();
-//                        // TODO: fix auth, right now all sign in attempts go through
-//                        FirebaseAuth firebaseAuth = new FirebaseAuth();
-//                        firebaseAuth.authenticateUser(username.getText().toString(), password.getText().toString(), new FirebaseAuth.AuthenticationListener() {
-//                            @Override
-//                            public void onAuthenticated(boolean isAuthenticated) {
-//                                if (isAuthenticated) {
-//                                    // Authentication successful
-//                                    Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
-//                                    Message.KEY_SENDER = username.getText().toString();
-//                                } else {
-//                                    // Authentication failed
-//                                    Log.d("Authentication", "Authentication failed");
-//                                }
-//                            }
-//                        });
+
+                        // AUTHENTICATES LOGIN FUNCTIONALITY FROM DATABASE
+                        FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+                        database.collection("users")
+                                .whereEqualTo("username", user)
+                                .whereEqualTo("password", pass)
+                                .get()
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        if (task.getResult().isEmpty()) {
+                                            Toast.makeText(getActivity().getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            // Login successful
+                                            // Proceed to the next screen or perform necessary actions
+                                            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
+                                            Message.KEY_SENDER = username.getText().toString();
+
+                                            Toast.makeText(getActivity().getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(getActivity().getApplicationContext(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+
 
                     }
                 });
