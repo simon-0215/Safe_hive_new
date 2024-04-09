@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
  * create an instance of this fragment.
  */
 public class BlankFragment extends Fragment {
+    private static String username = "";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,12 +61,57 @@ public class BlankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
         View view =  inflater.inflate(R.layout.fragment_blank, container, false);
-        Button button = view.findViewById(R.id.button_user1);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button user1 = view.findViewById(R.id.button1);
+        Button user2 = view.findViewById(R.id.button2);
+        Button user3 = view.findViewById(R.id.button3);
+        Button user4 = view.findViewById(R.id.button4);
+        Button user5 = view.findViewById(R.id.button5);
+        //user1.setText(getString(R.string.button_name));
+        //user2.setText(getString(R.string.button_name));
+        //user3.setText(getString(R.string.button_name));
+        //user4.setText(getString(R.string.button_name));
+        //user5.setText(getString(R.string.button_name));
+
+        user1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 在这里实现点击事件的处理逻辑
+
+                Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
+            }
+        });
+
+        user2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
+            }
+        });
+
+        user3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
+            }
+        });
+
+        user4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
+            }
+        });
+
+        user5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 Navigation.findNavController(v).navigate(R.id.action_blankFragment_to_navigation_home);
             }
         });
