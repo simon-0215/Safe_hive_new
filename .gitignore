@@ -22,3 +22,5 @@ local.properties
 .idea/misc.xml
 /.idea
 /.idea
+.idea/gradle.xml
+/.idea

@@ -1,5 +1,10 @@
 plugins {
     id("com.android.application")
+<<<<<<< Updated upstream
+=======
+    id("com.google.gms.google-services")
+    id("org.jetbrains.kotlin.android")
+>>>>>>> Stashed changes
 }
 
 android {
@@ -8,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.louxiaotian"
-        minSdk = 34
+        minSdk = 32
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -23,11 +28,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding = true
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
 }
 
@@ -41,6 +49,13 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("androidx.navigation:navigation-ui:2.7.7")
     implementation("androidx.annotation:annotation:1.7.1")
+<<<<<<< Updated upstream
+=======
+
+    // implementation("com.google.firebase:firebase-messaging:23.4.1")
+    implementation("com.google.firebase:firebase-database:20.3.1")
+    implementation("androidx.core:core-ktx:+")
+>>>>>>> Stashed changes
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
