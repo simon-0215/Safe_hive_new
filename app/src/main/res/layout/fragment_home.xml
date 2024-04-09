@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -41,26 +43,55 @@
             android:text="you"/>
 
     <TextView
-            android:id="@+id/display_text"
-            android:layout_width="66dp"
-            android:layout_height="72dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="112dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+        android:id="@+id/display_text1"
+        android:layout_width="132dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/display_text2"
+        android:layout_width="132dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/display_new"
+        android:layout_width="132dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="268dp"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/display_text3"
+        android:layout_width="132dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginEnd="260dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
-            android:id="@+id/editTextInput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="164dp"
-            android:layout_marginEnd="8dp"
-            android:hint="please type in your context"
-            app:layout_constraintTop_toBottomOf="@id/text_home"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
-            android:minHeight="48dp"/>
+        android:id="@+id/editTextInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="8dp"
+        android:hint="please type in your context"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_home" />
+
     <Button
             android:id="@+id/buttonPrint"
             android:layout_width="wrap_content"
