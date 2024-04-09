@@ -24,10 +24,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import static com.example.louxiaotian.BlankFragment.chat_username;
@@ -45,14 +43,7 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;
-        final TextView displayText1 = binding.displayText1;
-        final TextView displayText2 = binding.displayText2;
-        final TextView displayText3 = binding.displayText3;
-        final TextView displayTextnew = binding.displayTextnew;
-
-        List<TextView> textdisplays = new ArrayList<>(Arrays.asList(displayText3, displayText2, displayText1));
-        Iterator<TextView> t_iter = textdisplays.iterator();
-
+        final TextView displayText = binding.displayText;
         final TextView chat_Username = binding.textViewLeftTop;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         final EditText editText = binding.editTextInput; // Assuming you have an EditText with this ID in your FragmentHomeBinding
@@ -73,12 +64,9 @@ public class HomeFragment extends Fragment {
 //                        Log.d("Messages", "Recipient: " + message.getReciever());
 //                        Log.d("Messages", "Message: " + message.getText());
 //                    }
-
                     for (String message : messages) {
+                        displayText.setText(message);
                         Log.d("Messages", "Message: " + message);
-                        if(t_iter.hasNext()){
-                            t_iter.next().setText(message);
-                        }
                     }
                 } else {
                     // Failed to retrieve messages
@@ -90,8 +78,10 @@ public class HomeFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 String inputText = editText.getText().toString();
-                displayTextnew.setText(inputText);
+                displayText.setText(inputText);
                 addMessageToFirestore(inputText, chat_username);
             }
         });
