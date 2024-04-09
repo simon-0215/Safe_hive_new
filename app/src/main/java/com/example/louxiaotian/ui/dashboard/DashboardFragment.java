@@ -1,6 +1,9 @@
 package com.example.louxiaotian.ui.dashboard;
 
+import static com.example.louxiaotian.BlankFragment.chat_username;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.louxiaotian.MessageManager.Message;
+import com.example.louxiaotian.database.DatabaseManager;
 import com.example.louxiaotian.databinding.FragmentDashboardBinding;
+
+import java.util.List;
 
 public class DashboardFragment extends Fragment {
 
@@ -36,10 +44,21 @@ public class DashboardFragment extends Fragment {
                 String date = dateInputEdittext.getText().toString();
                 String keyWord = keywordInputEdittext.getText().toString();
 
+                DatabaseManager dbm = new DatabaseManager();
+                dbm.getSingleMessage(Message.KEY_SENDER, keyWord, date, new DatabaseManager.GetSingleMessageListener() {
+                    @Override
+                    public void onMessageRetrieved(String message) {
 
-                String message_after_decryption = "message from "+date+" "+ keyWord;
-                real_message_display_bar.setText(message_after_decryption);
-//                real_message_display_bar.setText(message_after_decryption);
+                        if (message != null) {
+                            String message_after_decryption = "message from "+date+" "+ keyWord+": "+message;
+                            real_message_display_bar.setText(message_after_decryption);
+
+                        } else {
+                            // Failed to retrieve messages
+                            Log.d("Messages", "Failed to retrieve messages");
+                        }
+                    }
+                });
 
             }
         });

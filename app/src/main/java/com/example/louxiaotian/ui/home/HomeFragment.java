@@ -1,6 +1,7 @@
 package com.example.louxiaotian.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.louxiaotian.MessageManager.Message;
+import com.example.louxiaotian.database.DatabaseManager;
 import com.example.louxiaotian.databinding.FragmentHomeBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.example.louxiaotian.BlankFragment.chat_username;
 
@@ -42,6 +50,24 @@ public class HomeFragment extends Fragment {
         final Button button = binding.buttonPrint; // Assuming you have a Button with this ID in your FragmentHomeBinding
         chat_Username.setText(chat_username);
 
+        DatabaseManager dbm = new DatabaseManager();
+        dbm.getAllMessages(Message.KEY_SENDER, chat_username, new DatabaseManager.GetAllMessagesListener() {
+            @Override
+            public void onMessagesRetrieved(List<Message> messages) {
+                if (messages != null) {
+                    // Messages retrieved successfully
+                    for (Message message : messages) {
+                        // Process each message
+                        displayText.setText(message.getText());
+//                        Log.d("Messages", "Message: " + );
+                    }
+                } else {
+                    // Failed to retrieve messages
+                    Log.d("Messages", "Failed to retrieve messages");
+                }
+            }
+        });
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +75,7 @@ public class HomeFragment extends Fragment {
 
                 String inputText = editText.getText().toString();
                 displayText.setText(inputText);
-                addMessageToFirestore(inputText);
+                addMessageToFirestore(inputText, chat_username);
             }
         });
         return root;
@@ -60,12 +86,13 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-    public void addMessageToFirestore(String text){
+    public void addMessageToFirestore(String text, String reciever){
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> data = new HashMap<>();
-        data.put("Text", text);
-        data.put("Sender", Message.KEY_SENDER);
-        data.put("Timestamp", new Date());
+        data.put("text", text);
+        data.put("sender", Message.KEY_SENDER);
+        data.put("receiver", reciever);
+        data.put("time_date",(new Date()).toString());
 
         database.collection("Message")
                 .add(data)

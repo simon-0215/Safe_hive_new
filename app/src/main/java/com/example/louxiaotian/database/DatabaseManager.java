@@ -1,6 +1,8 @@
 package com.example.louxiaotian.database;
 import android.util.Log;
 import androidx.annotation.NonNull;
+
+import com.example.louxiaotian.MessageManager.Message;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -73,6 +75,70 @@ public class DatabaseManager {
                 });
     }
 
+    public void getAllMessages(String sender, String receiver, final GetAllMessagesListener listener) {
+        db.collection("Message")
+                .whereEqualTo("sender", sender)
+                .whereEqualTo("receiver", receiver)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<Message> messages = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            // Assuming Message is a custom class representing your message data
+                            Message message = new Message(document.getString("receiver"), document.getString("text"), document.getString("time_date"));
+                            messages.add(message);
+                        }
+                        listener.onMessagesRetrieved(messages);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("FirebaseAuthentication", "Error retrieving messages", e);
+                        listener.onMessagesRetrieved(null);
+                    }
+                });
+    }
+
+    public void getSingleMessage(String sender, String receiver, String time, final GetSingleMessageListener listener) {
+        Log.d("Sender:", sender);
+        Log.d("Receiver:", receiver);
+        Log.d("Time:", time);
+
+        db.collection("Message")
+                .whereEqualTo("sender", sender)
+                .whereEqualTo("receiver", receiver)
+                .whereEqualTo("time_date", time)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+                            if (documentSnapshot.exists()) {
+                                String text = documentSnapshot.getString("text");
+                                listener.onMessageRetrieved(text);
+                            } else {
+                                listener.onMessageRetrieved(null);
+                            }
+                        } else {
+                            listener.onMessageRetrieved(null);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("FirebaseAuthentication", "Error retrieving messages", e);
+                        listener.onMessageRetrieved(null);
+                    }
+                });
+    }
+
+
+
+
     public interface AuthenticationListener {
         void onAuthenticated(boolean isAuthenticated);
     }
@@ -80,4 +146,14 @@ public class DatabaseManager {
     public interface GetAllUsernamesListener {
         void onUsernamesRetrieved(List<String> usernames);
     }
+
+    public interface GetAllMessagesListener {
+        void onMessagesRetrieved(List<Message> messages);
+    }
+
+    public interface GetSingleMessageListener {
+        void onMessageRetrieved(String message);
+    }
+
+
 }
