@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.louxiaotian.databinding.FragmentHomeBinding;
 
+import static com.example.louxiaotian.BlankFragment.chat_username;
+
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
@@ -26,13 +28,16 @@ public class HomeFragment extends Fragment {
 
         final TextView textView = binding.textHome;
         final TextView displayText = binding.displayText;
+        final TextView chat_Username = binding.textViewLeftTop;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         final EditText editText = binding.editTextInput; // Assuming you have an EditText with this ID in your FragmentHomeBinding
         final Button button = binding.buttonPrint; // Assuming you have a Button with this ID in your FragmentHomeBinding
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 获取EditText输入的内容，并设置到TextView上显示
+                displayText.setText(chat_username);
+
+
                 String inputText = editText.getText().toString();
                 displayText.setText(inputText);
             }
