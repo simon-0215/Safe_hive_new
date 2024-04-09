@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.navigation.Navigation;
 
+import com.example.louxiaotian.Encryption.EncryptionTest;
 import com.example.louxiaotian.MessageManager.Message;
 import com.example.louxiaotian.databinding.FragmentLoginBinding;
 
