@@ -28,6 +28,8 @@ import com.example.louxiaotian.databinding.FragmentLoginBinding;
 import com.example.louxiaotian.R;
 
 
+import com.example.louxiaotian.kdc.KDCManagement;
+import com.google.android.gms.common.internal.Constants;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -137,6 +139,9 @@ public class LoginFragment extends Fragment {
                 button_login.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        KDCManagement kdcManagement = new KDCManagement();
+                        kdcManagement.generateKey(1);
 
                         Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_blankFragment);
                         Message.KEY_SENDER = username.getText().toString();
