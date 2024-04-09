@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayText.setText(chat_username);
+                chat_Username.setText(chat_username);
 
 
                 String inputText = editText.getText().toString();
